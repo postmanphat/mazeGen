@@ -6,6 +6,7 @@ let cells = [];
 let grid = {width : 40, height: 40};
 let cellWidth = canvas.width/grid.width;
 let currentCell = 0;
+let route = [];
 
 setup();
 
@@ -40,6 +41,12 @@ function drawCell(cell) {
             }
         }
     };
+}
+
+function drawCurrentCell() {
+    context.fillStyle = "#7f00ff";
+    context.beginPath();
+    context.fillRect(cells[currentCell].x, cells[currentCell].y, canvas.width/grid.width, canvas.height/grid.height);
 }
 
 function shuffleArray(array) {
@@ -114,7 +121,8 @@ function dfs(cell) {
     for (i = 0; i< unvisited.length;) {
         let selectedNeighbour = unvisited.pop();
         if (!selectedNeighbour.visited) {
-            removeWall(cell, selectedNeighbour);
+            // removeWall(cell, selectedNeighbour);
+            route.push([cell, selectedNeighbour]);
             currentCell = selectedNeighbour.id;
             // draw()
             // console.log("neighbour visited");
@@ -140,14 +148,20 @@ function setup() {
 }
 
 function draw() {
+    // console.log("Current cell: " + currentCell);
     context.style = '#000000';
+    context.fillStyle = '#000000';
     context.beginPath()
     context.rect(0, 0, canvas.width, canvas.height);
     context.fill();
+    let step = route.shift();
+    removeWall(step[0], step[1]);
+    currentCell = step[1].id;
+    drawCurrentCell();
     cells.forEach((function (cell) {
         drawCell(cell);
     }));
-    // requestAnimationFrame(draw);
+    requestAnimationFrame(draw);
 }
 
 function main(cells) {
