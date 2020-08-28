@@ -161,7 +161,9 @@ function draw() {
     cells.forEach((function (cell) {
         drawCell(cell);
     }));
-    requestAnimationFrame(draw);
+    if (route.length > 0) {
+        requestAnimationFrame(draw);
+    }
 }
 
 function main(cells) {
