@@ -1,0 +1,8 @@
+canvas {
+  height: 100vh;
+  width: 100vh;
+  position: absolute;
+  background-color: #000000;
+  margin: 0;
+  padding: 0;
+}
